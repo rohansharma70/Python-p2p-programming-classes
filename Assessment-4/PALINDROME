@@ -1,0 +1,71 @@
+def palindromeIndex(s):
+    l = len(s)
+    i = 0
+    j = l-1
+    while i<l:
+        if s[i]!=s[j]:
+            break
+        i+=1
+        j-=1
+    if i>j: return -1
+    a = i+1
+    b = j
+    while a<j and b>i+1:
+        if s[a]!=s[b]:
+            return j
+        a+=1
+        b-=1
+    return i
+
+for _ in range(int(input())):
+    print(palindromeIndex(input()))
+Logic explanation
+
+Let our string be
+
+s = "babi7loolibab"
+Our code is
+
+l = len(s)
+i = 0
+j = l-1
+while i<l:
+    if s[i]!=s[j]:
+        break
+    i+=1
+    j-=1
+if i>j: return -1
+In the above part we are comparing string from forward to backward, if i becomes greater than j it will simply mean that out string is a palindrome. Therefore we return -1
+
+a = i+1
+b = j
+while a<j and b>i+1:
+    if s[a]!=s[b]:
+        return j
+    a+=1
+    b-=1
+return i
+But in our example string s = "babi7loolibab" our loop will break when i=4 and j = 8.
+
+It means we have to remove index 4 or index 8.
+
+So we just have to check if s[i+1:8] is a palindrome or not.
+
+If yes we will return i else we will return j
+
+Alternative solution
+
+python
+def palindromeIndex(s):
+    for i,j in enumerate(range(0,len(s)//2),1):
+        if s[-i] == s[j]:
+            continue
+        if s[j:-i]==s[j:-i][::-1]:
+            return len(s)-i
+        elif s[j+1:-i+1]==s[j+1:-i+1][::-1]:
+            return j
+        return -1
+    return -1
+
+for _ in range(int(input())):
+    print(palindromeIndex(input()))
